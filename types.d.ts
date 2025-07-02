@@ -1,6 +1,6 @@
 import { type SearchOptions } from 'flexsearch'
 
-declare module '@/mdx/search.js' {
+declare module '@/mdx/search.mjs' {
   export type Result = {
     url: string
     title: string

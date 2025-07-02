@@ -1,13 +1,13 @@
-const { slugifyWithCounter } = require('@sindresorhus/slugify')
-const glob = require('fast-glob')
-const fs = require('fs')
-const { toString } = require('mdast-util-to-string')
-const path = require('path')
-const { remark } = require('remark')
-const remarkMdx = require('remark-mdx').default
-const { createLoader } = require('simple-functional-loader')
-const { filter } = require('unist-util-filter')
-const { SKIP, visit } = require('unist-util-visit')
+import { slugifyWithCounter } from '@sindresorhus/slugify'
+import glob from 'fast-glob'
+import fs from 'fs'
+import { toString } from 'mdast-util-to-string'
+import path from 'path'
+import { remark } from 'remark'
+import remarkMdx from 'remark-mdx'
+import { createLoader } from 'simple-functional-loader'
+import { filter } from 'unist-util-filter'
+import { SKIP, visit } from 'unist-util-visit'
 
 const processor = remark().use(remarkMdx).use(extractSections)
 const slugify = slugifyWithCounter()
@@ -42,13 +42,13 @@ function extractSections() {
   }
 }
 
-module.exports = function Search(nextConfig = {}) {
+export default function Search(nextConfig = {}) {
   let cache = new Map()
 
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
       config.module.rules.push({
-        test: __filename,
+        test: import.meta.url,
         use: [
           createLoader(function () {
             let appDir = path.resolve('./src/app')
@@ -131,5 +131,3 @@ module.exports = function Search(nextConfig = {}) {
     },
   })
 }
-
-export default Search
