@@ -131,3 +131,5 @@ module.exports = function Search(nextConfig = {}) {
     },
   })
 }
+
+export default Search
