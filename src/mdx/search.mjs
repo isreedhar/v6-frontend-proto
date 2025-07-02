@@ -8,7 +8,9 @@ import remarkMdx from 'remark-mdx'
 import { createLoader } from 'simple-functional-loader'
 import { filter } from 'unist-util-filter'
 import { SKIP, visit } from 'unist-util-visit'
+import { fileURLToPath } from 'url'
 
+const __filename = fileURLToPath(import.meta.url)
 const processor = remark().use(remarkMdx).use(extractSections)
 const slugify = slugifyWithCounter()
 
@@ -48,7 +50,7 @@ export default function Search(nextConfig = {}) {
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
       config.module.rules.push({
-        test: import.meta.url,
+        test: __filename,
         use: [
           createLoader(function () {
             let appDir = path.resolve('./src/app')
